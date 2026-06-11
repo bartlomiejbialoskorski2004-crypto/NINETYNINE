@@ -531,17 +531,37 @@ h2,
   display: none !important;
 }
 
-/* No fade/slide-in animations on the homepage product grid — instant & natural */
+/* No entrance (fade/slide-in) animations on the homepage product grid */
 .collection .scroll-trigger,
 .collection .card-wrapper,
 .collection .grid__item,
 .collection .card,
 .collection .card__media,
-.collection .card .media,
-.collection .card__media img {
-  opacity: 1 !important;
+.collection .card .media {
   animation: none !important;
   transition: none !important;
+  transform: none !important;
+}
+
+.collection .scroll-trigger,
+.collection .card-wrapper,
+.collection .grid__item {
+  opacity: 1 !important;
+}
+
+/* Hover image swap — INSTANT, no fade / no zoom.
+   First image hides, second shows immediately on hover; no transition/scale. */
+.collection .media.media--hover-effect > img {
+  transition: none !important;
+  transform: none !important;
+}
+
+.collection .card-wrapper:hover .media.media--hover-effect > img:first-child:not(:only-child) {
+  opacity: 0 !important;
+}
+
+.collection .card-wrapper:hover .media.media--hover-effect > img + img {
+  opacity: 1 !important;
   transform: none !important;
 }
 
