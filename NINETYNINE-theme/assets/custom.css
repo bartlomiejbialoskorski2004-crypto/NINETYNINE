@@ -198,12 +198,26 @@
 }
 
 /* --- Product typography / price (smaller side columns) -------------------- */
+.product__title {
+  text-align: center;
+}
+
 .product__title h1,
 .product__title .h1 {
   text-transform: uppercase;
   font-weight: 800;
   letter-spacing: 0.01em;
-  font-size: 2rem;
+  font-size: 2.6rem;
+}
+
+/* Price: centered + smaller, under the title */
+.product__info-left .price,
+.product .price {
+  text-align: center;
+}
+
+.product__info-left .price .price-item {
+  font-size: 1.4rem;
 }
 
 .product .price__sale .price-item--sale,
@@ -279,14 +293,14 @@
 .section-header .header {
   max-width: none;
   width: 100%;
-  padding-left: 3rem;
-  padding-right: 3rem;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
 }
 
 @media screen and (max-width: 749px) {
   .section-header .header {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
   }
 }
 
@@ -368,6 +382,41 @@ h2,
   letter-spacing: 0.08em;
   font-size: 1.2rem;
   font-weight: 600;
+}
+
+/* No static/Dawn underlines anywhere in the header — only our animated ::after.
+   Dawn underlines the inner <span> on hover and the active item; kill both. */
+.section-header .header__menu-item,
+.section-header .header__menu-item span,
+.section-header .header__menu-item:hover span,
+.section-header .header__active-menu-item,
+.section-header .list-menu__item--link,
+.section-header .header__icon,
+.section-header .header__icon--account,
+.section-header .header__icon--cart,
+.section-header .header__icon-text {
+  text-decoration: none !important;
+}
+
+/* Nav menu items: smooth underline that animates in on hover only */
+.header__inline-menu .header__menu-item {
+  position: relative;
+}
+
+.header__inline-menu .header__menu-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.2rem;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.25s ease;
+}
+
+.header__inline-menu .header__menu-item:hover::after,
+.header__inline-menu .header__menu-item:focus-visible::after {
+  width: 100%;
 }
 
 .header__icons .header__icon span,
@@ -516,44 +565,79 @@ h2,
   border-radius: 0;
 }
 
-/* --- Brand marquee -------------------------------------------------------- */
+/* --- Brand marquee — full wordmark, condensed, resting on the bottom edge -- */
 .brand-marquee {
   overflow: hidden;
+  width: 100%;
 }
 
 .brand-marquee__inner {
+  display: block;
   width: 100%;
   text-align: center;
-  line-height: 0.8;
+  line-height: 0.78;
+  /* Parallax: the wordmark rises from below as you scroll into view */
+  transform: translateY(var(--marquee-shift, 40%));
+  transition: transform 0.1s linear;
+  will-change: transform;
 }
 
 .brand-marquee__text {
-  display: inline-block;
+  display: block;
+  width: 100%;
   white-space: nowrap;
   text-transform: uppercase;
   font-weight: 900;
-  letter-spacing: -0.02em;
-  line-height: 0.8;
+  letter-spacing: -0.03em;
+  line-height: 0.78;
+  color: #000 !important;
+  /* Whole wordmark fits across the viewport; bottom of letters on the edge */
+  font-size: 11vw !important;
+  margin-bottom: -0.1em; /* let the wordmark rest right on the bottom frame */
 }
 
-/* --- Footer — minimal ----------------------------------------------------- */
+/* --- Footer — policy links left, social icons right (one row) ------------- */
 .footer__content-bottom {
   border-top: 0;
+  display: none; /* hide the empty localization/copyright bottom row */
 }
 
-/* Menu links left, social icons right on the same row */
+/* Top row: links left, social right */
+.footer__content-top {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Blocks wrapper (the menu) sits on the left and lays its links in a row */
+.footer__content-top .footer__blocks-wrapper {
+  display: flex;
+  margin: 0;
+}
+
 .footer__content-top .footer-block--menu {
-  align-items: flex-start;
+  margin: 0;
+  align-items: center;
 }
 
-.footer__content-top .footer-block__details-content .list-menu {
+.footer__content-top .footer-block__details-content .list-menu,
+.footer__content-top .footer-block__details-content.list-unstyled {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.6rem;
+  gap: 2rem;
+  margin: 0;
+}
+
+/* Social icons pinned to the right */
+.footer__content-top .footer__list-social {
+  margin: 0 0 0 auto;
 }
 
 .footer-block__heading,
-.footer__list-social,
 .footer-block--menu .list-menu__item {
   text-transform: uppercase;
   letter-spacing: 0.08em;
