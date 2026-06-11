@@ -3,6 +3,314 @@
    Premium black/white, bold uppercase, sharp edges.
    ========================================================================== */
 
+/* ==========================================================================
+   PRODUCT PAGE — Balenciaga-style 3-column layout
+   info-left | media-center | options-right
+   ========================================================================== */
+@media screen and (min-width: 990px) {
+  /* Break the product section out of the 1200px page-width to full bleed */
+  .template-product #MainContent .page-width {
+    max-width: none;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  .product {
+    display: grid;
+    grid-template-columns: 0.7fr 3.4fr 0.7fr;
+    column-gap: 2.4rem;
+    align-items: center;
+  }
+
+  /* Media in the centre column — fills the column, content centered */
+  .product__media-wrapper {
+    grid-column: 2;
+    grid-row: 1;
+    max-width: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .product__media-wrapper media-gallery,
+  .product__media-wrapper slider-component,
+  .product__media-wrapper .product__media-list {
+    display: block;
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Override Dawn's media width constraint (media_size: large = 65%) */
+  .product__media-wrapper .product__media-item,
+  .product__media-wrapper .product__media-item .media {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  /* Let the info container's two halves join the product grid */
+  .product__info-wrapper {
+    display: contents;
+  }
+
+  .product__info-container {
+    display: contents;
+  }
+
+  .product__info-left {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .product__info-right {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  /* Hide the "View full details" link on the product page (single product) */
+  .product__view-details {
+    display: none;
+  }
+}
+
+/* --- Gallery: one image at a time, bare arrows on hover ------------------- */
+/* Clean one-up look: hide the thumbnail strip entirely */
+.product .thumbnail-slider,
+.product .thumbnail-list {
+  display: none !important;
+}
+
+/* Desktop: show only the active slide; arrows page through them (custom JS) */
+@media screen and (min-width: 990px) {
+  .product__media-wrapper .product__media-list {
+    display: block;
+    width: 100%;
+  }
+
+  .product__media-wrapper .product__media-item {
+    display: none;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .product__media-wrapper .product__media-item.is-active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* The image itself: centered, larger */
+  .product__media-wrapper .product__media-item.is-active .product__media,
+  .product__media-wrapper .product__media-item.is-active .media,
+  .product__media-wrapper .product__media-item.is-active img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    max-height: 92vh;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+/* Remove the media frame/border around product images */
+.product__media-wrapper .global-media-settings,
+.product__media-wrapper .product__media,
+.product__media-wrapper .media {
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.product__media-wrapper .global-media-settings::after,
+.product__media-wrapper .media::after {
+  display: none !important;
+}
+
+/* Media wrapper is the hover/positioning context for the arrows */
+.product__media-wrapper {
+  position: relative;
+}
+
+/* Slider-buttons row → bare overlay arrows + centered counter.
+   Dawn hides these on desktop (.slider--mobile + .slider-buttons{display:none}),
+   so force them visible here on the product gallery. */
+.product__media-wrapper .slider-buttons {
+  display: flex !important;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* The arrow buttons themselves — no background, just the caret glyph */
+.product__media-wrapper .slider-button {
+  pointer-events: auto;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  color: rgb(var(--color-foreground));
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+}
+
+.product__media-wrapper .slider-button .svg-wrapper,
+.product__media-wrapper .slider-button .icon-caret {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+/* Fade arrows in when hovering the image */
+.product__media-wrapper:hover .slider-button:not([disabled]) {
+  opacity: 1;
+}
+
+/* Counter sits centered at the bottom, subtle */
+.product__media-wrapper .slider-counter {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  letter-spacing: 0.1em;
+}
+
+/* Keep the single image within its grid cell — preserve proportions */
+.product__media-wrapper .product__media-item img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* --- Product typography / price ------------------------------------------- */
+.product__title h1,
+.product__title .h1 {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  font-size: 2.6rem;
+}
+
+.product .price__sale .price-item--sale,
+.product .price--on-sale .price-item--sale {
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.product .price--on-sale .price-item--regular {
+  opacity: 0.55;
+}
+
+.product__description,
+.product .rte {
+  line-height: 1.5;
+}
+
+/* Collapsible rows — clean, square */
+.product .product__accordion .accordion__title,
+.product .product__accordion summary {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+/* --- Size buttons — square pills ------------------------------------------ */
+.product fieldset.product-form__input input[type="radio"] + label,
+.product .product-form__input--pill input[type="radio"] + label {
+  border-radius: 0;
+  min-width: 4.4rem;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid rgb(var(--color-foreground));
+}
+
+.product .product-form__input input[type="radio"]:checked + label {
+  background: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+}
+
+/* --- ADD TO CART — solid black block -------------------------------------- */
+.product .product-form__buttons .product-form__submit {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  background: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+}
+
+/* --- Full-bleed header: menu flush-left, icons flush-right ---------------- */
+.section-header .header {
+  max-width: none;
+  width: 100%;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+@media screen and (max-width: 749px) {
+  .section-header .header {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* --- Header: transparent overlay on home, solid white elsewhere ----------- */
+/* HOME: header is ALWAYS transparent and overlaps the hero — even when sticky.
+   It pins to the top (position: sticky from Dawn's "always" type) but never
+   turns white. The hero starts underneath it. */
+.template-index .section-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+}
+
+.template-index .section-header .header-wrapper,
+.template-index .section-header sticky-header.header-wrapper,
+.template-index .section-header .header-wrapper.gradient {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-bottom: 0;
+}
+
+.template-index .section-header .header,
+.template-index .section-header .header__heading,
+.template-index .section-header .header__wordmark,
+.template-index .section-header .header__menu-item,
+.template-index .section-header .header__active-menu-item,
+.template-index .section-header .list-menu__item--link,
+.template-index .section-header .header__icon,
+.template-index .section-header .header__icon .icon,
+.template-index .section-header .header__icon span,
+.template-index .section-header .header__icon-text,
+.template-index .section-header .cart-count-bubble {
+  color: #fff;
+}
+
+/* SVG icons inherit white on home */
+.template-index .section-header .header__icon .icon path,
+.template-index .section-header .header__icon svg {
+  color: #fff;
+  fill: currentColor;
+}
+
+/* Hero sits at the very top, under the floating transparent header */
+.template-index #MainContent > .shopify-section:first-child {
+  margin-top: 0;
+}
+
+/* OTHER PAGES: header is always solid white (Dawn default scheme-1) and simply
+   stays pinned — no transparency, no color switching. Nothing extra needed
+   beyond Dawn's sticky behavior. */
+
 /* --- Global typography ---------------------------------------------------- */
 h1,
 h2,
@@ -36,6 +344,39 @@ h2,
 .header__icon--cart {
   text-transform: uppercase;
   letter-spacing: 0.08em;
+}
+
+/* Breathing room between ACCOUNT and CART */
+.header__icons {
+  gap: 2.6rem;
+}
+
+/* Account / Cart rendered as text instead of icons */
+.header__icon-text {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1.2rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.header__icon--account,
+.header__icon--cart {
+  width: auto;
+  height: auto;
+}
+
+/* Hide the search icon — not shown in the reference header */
+.header__icons .header__search,
+.header__icons details-modal {
+  display: none;
+}
+
+/* Always show the account link on desktop (no longer an icon to hide) */
+@media screen and (min-width: 990px) {
+  .header__icon--account.small-hide {
+    display: inline-flex;
+  }
 }
 
 /* Announcement bar — small, spaced, uppercase */
