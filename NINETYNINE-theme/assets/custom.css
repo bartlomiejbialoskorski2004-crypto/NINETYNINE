@@ -351,6 +351,45 @@
   margin-top: 0;
 }
 
+/* Smooth fade between transparent and white */
+.template-index .section-header .header-wrapper,
+.template-index .section-header .header__wordmark,
+.template-index .section-header .list-menu__item--link,
+.template-index .section-header .header__menu-item,
+.template-index .section-header .header__icon,
+.template-index .section-header .header__icon-text {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* HOME + scrolling UP: solid white bar with dark text/icons (added by
+   ninetynine-header.js as .nn-scroll-up). Scrolling down / at top stays transparent. */
+.template-index .section-header.nn-scroll-up .header-wrapper,
+.template-index .section-header.nn-scroll-up sticky-header.header-wrapper,
+.template-index .section-header.nn-scroll-up .header-wrapper.gradient {
+  background: rgb(var(--color-background)) !important;
+  background-color: rgb(var(--color-background)) !important;
+}
+
+.template-index .section-header.nn-scroll-up .header,
+.template-index .section-header.nn-scroll-up .header__heading,
+.template-index .section-header.nn-scroll-up .header__wordmark,
+.template-index .section-header.nn-scroll-up .header__menu-item,
+.template-index .section-header.nn-scroll-up .header__active-menu-item,
+.template-index .section-header.nn-scroll-up .list-menu__item--link,
+.template-index .section-header.nn-scroll-up .header__icon,
+.template-index .section-header.nn-scroll-up .header__icon span,
+.template-index .section-header.nn-scroll-up .header__icon-text,
+.template-index .section-header.nn-scroll-up .cart-count-bubble {
+  color: rgb(var(--color-foreground));
+}
+
+.template-index .section-header.nn-scroll-up .header__icon .icon path,
+.template-index .section-header.nn-scroll-up .header__icon svg {
+  color: rgb(var(--color-foreground));
+}
+
 /* OTHER PAGES: header is always solid white (Dawn default scheme-1) and simply
    stays pinned — no transparency, no color switching. Nothing extra needed
    beyond Dawn's sticky behavior. */
