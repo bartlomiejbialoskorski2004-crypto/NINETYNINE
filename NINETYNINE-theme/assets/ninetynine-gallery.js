@@ -1,17 +1,20 @@
 /*
  * NINETYNINE custom product gallery (desktop)
- * Shows one product image at a time. Change the image by:
- *   - scrolling the mouse wheel over the image
- *   - dragging / swiping left-right on the image
- * The arrow buttons still work as a fallback. Counter (1/N) stays in sync.
- *
- * Dawn's own slider-component disables the arrows on desktop, so we keep
- * them enabled and take over the click handling in the capture phase.
+ * One image at a time. No visible arrow buttons. Instead, hovering the LEFT
+ * half of the image shows a left-arrow cursor (click = previous), and the
+ * RIGHT half shows a right-arrow cursor (click = next).
+ * Touch devices keep a simple swipe via the same prev/next.
  */
 (function () {
   function isDesktop() {
     return window.matchMedia('(min-width: 990px)').matches;
   }
+
+  // Custom BLACK arrow cursors (subtle white halo so they show on dark photos too).
+  var CURSOR_LEFT =
+    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M30 12 18 24l12 12' fill='none' stroke='%23fff' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' opacity='.5'/%3E%3Cpath d='M30 12 18 24l12 12' fill='none' stroke='%23000' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\") 24 24, w-resize";
+  var CURSOR_RIGHT =
+    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M18 12l12 12-12 12' fill='none' stroke='%23fff' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' opacity='.5'/%3E%3Cpath d='M18 12l12 12-12 12' fill='none' stroke='%23000' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\") 24 24, e-resize";
 
   function initGallery(gallery) {
     if (gallery.dataset.nnInit === 'true') return;
@@ -21,8 +24,6 @@
     );
     if (slides.length < 2) return;
 
-    var prevBtn = gallery.querySelector('.slider-button--prev');
-    var nextBtn = gallery.querySelector('.slider-button--next');
     var currentEl = gallery.querySelector('.slider-counter--current');
     var totalEl = gallery.querySelector('.slider-counter--total');
     var stage = gallery.querySelector('.product__media-wrapper') || gallery;
@@ -44,106 +45,54 @@
       if (currentEl) currentEl.textContent = index + 1;
     }
 
-    /* ---- Arrows (kept working as fallback) ------------------------------- */
-    function keepEnabled() {
-      if (!isDesktop()) return;
-      [prevBtn, nextBtn].forEach(function (btn) {
-        if (btn && btn.hasAttribute('disabled')) btn.removeAttribute('disabled');
-      });
+    function isLeftHalf(e) {
+      var rect = stage.getBoundingClientRect();
+      return e.clientX - rect.left < rect.width / 2;
     }
-    if (prevBtn && nextBtn) {
-      var observer = new MutationObserver(keepEnabled);
-      [prevBtn, nextBtn].forEach(function (btn) {
-        observer.observe(btn, { attributes: true, attributeFilter: ['disabled'] });
-      });
-      keepEnabled();
 
-      prevBtn.addEventListener(
-        'click',
-        function (e) {
-          if (!isDesktop()) return;
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          show(index - 1);
-        },
-        true
+    /* ---- Cursor turns into a left/right arrow over the image ------------- */
+    stage.addEventListener('mousemove', function (e) {
+      if (!isDesktop()) {
+        stage.style.removeProperty('cursor');
+        return;
+      }
+      // setProperty with priority beats any CSS rule (incl. !important).
+      stage.style.setProperty(
+        'cursor',
+        isLeftHalf(e) ? CURSOR_LEFT : CURSOR_RIGHT,
+        'important'
       );
-      nextBtn.addEventListener(
-        'click',
-        function (e) {
-          if (!isDesktop()) return;
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          show(index + 1);
-        },
-        true
-      );
-    }
+    });
 
-    /* ---- Mouse-wheel scroll changes the image --------------------------- */
-    var wheelLock = false;
-    stage.addEventListener(
-      'wheel',
-      function (e) {
-        if (!isDesktop()) return;
-        // Only hijack mostly-vertical or horizontal intent over the image.
-        var delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-        if (delta === 0) return;
-        e.preventDefault();
-        if (wheelLock) return;
-        wheelLock = true;
-        show(index + (delta > 0 ? 1 : -1));
-        window.setTimeout(function () {
-          wheelLock = false;
-        }, 250);
-      },
-      { passive: false }
-    );
-
-    /* ---- Drag / swipe changes the image --------------------------------- */
-    var dragStartX = null;
-    var dragging = false;
-
-    function pointerDown(x) {
-      dragStartX = x;
-      dragging = true;
-    }
-    function pointerUp(x) {
-      if (!dragging || dragStartX === null) return;
-      var dx = x - dragStartX;
-      dragging = false;
-      dragStartX = null;
-      if (Math.abs(dx) < 40) return; // ignore tiny drags / clicks
-      show(index + (dx < 0 ? 1 : -1)); // drag left → next
-    }
-
-    // Mouse drag (desktop)
-    stage.addEventListener('mousedown', function (e) {
+    /* ---- Click left half = prev, right half = next ---------------------- */
+    stage.addEventListener('click', function (e) {
       if (!isDesktop()) return;
-      pointerDown(e.clientX);
-    });
-    window.addEventListener('mouseup', function (e) {
-      if (!isDesktop()) return;
-      pointerUp(e.clientX);
-    });
-    // Prevent the browser's native image drag-ghost
-    stage.addEventListener('dragstart', function (e) {
-      if (isDesktop()) e.preventDefault();
+      // ignore clicks on real controls/links inside the stage
+      if (e.target.closest('a, button')) return;
+      if (isLeftHalf(e)) {
+        show(index - 1);
+      } else {
+        show(index + 1);
+      }
     });
 
-    // Touch swipe (kept for completeness; Dawn also handles mobile)
+    /* ---- Touch swipe (mobile) ------------------------------------------- */
+    var startX = null;
     stage.addEventListener(
       'touchstart',
       function (e) {
-        pointerDown(e.touches[0].clientX);
+        startX = e.touches[0].clientX;
       },
       { passive: true }
     );
     stage.addEventListener('touchend', function (e) {
-      pointerUp(e.changedTouches[0].clientX);
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      startX = null;
+      if (Math.abs(dx) < 40) return;
+      show(index + (dx < 0 ? 1 : -1));
     });
 
-    stage.style.cursor = 'grab';
     show(index);
   }
 

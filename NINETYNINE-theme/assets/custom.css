@@ -110,6 +110,16 @@
     align-items: center;
   }
 
+  /* Instant, natural image swap — no fade-in / brightening / animation */
+  .product__media-wrapper .product__media-item,
+  .product__media-wrapper .product__media-item.scroll-trigger,
+  .product__media-wrapper .product__media-item.animate--fade-in,
+  .product__media-wrapper .product__media-item.is-active {
+    opacity: 1 !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
   /* The image itself: centered, larger */
   .product__media-wrapper .product__media-item.is-active .product__media,
   .product__media-wrapper .product__media-item.is-active .media,
@@ -144,41 +154,17 @@
   position: relative;
 }
 
-/* Slider-buttons row → bare overlay arrows + centered counter.
-   Dawn hides these on desktop (.slider--mobile + .slider-buttons{display:none}),
-   so force them visible here on the product gallery. */
-.product__media-wrapper .slider-buttons {
-  display: flex !important;
-  position: absolute;
-  inset: 0;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1.2rem;
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* The arrow buttons themselves — no background, just the caret glyph */
+/* No visible arrow buttons — navigation is via left/right cursor zones
+   handled by ninetynine-gallery.js (cursor turns into a ‹ / › arrow). */
 .product__media-wrapper .slider-button {
-  pointer-events: auto;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  color: rgb(var(--color-foreground));
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+  display: none !important;
 }
 
-.product__media-wrapper .slider-button .svg-wrapper,
-.product__media-wrapper .slider-button .icon-caret {
-  width: 2.4rem;
-  height: 2.4rem;
-}
-
-/* Fade arrows in when hovering the image */
-.product__media-wrapper:hover .slider-button:not([disabled]) {
-  opacity: 1;
+/* Make the arrow cursor apply across the WHOLE image, not just the edges:
+   every child inherits the cursor set inline on the media wrapper by the JS.
+   (Do NOT put !important on the wrapper itself — that would beat the JS inline style.) */
+.product__media-wrapper * {
+  cursor: inherit !important;
 }
 
 /* Counter sits centered at the bottom, subtle */
@@ -538,6 +524,46 @@ h2,
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-weight: 800;
+}
+
+/* Draggable slider, NO arrows: hide the collection slider buttons + counter */
+.collection .slider-buttons {
+  display: none !important;
+}
+
+/* No fade/slide-in animations on the homepage product grid — instant & natural */
+.collection .scroll-trigger,
+.collection .card-wrapper,
+.collection .grid__item,
+.collection .card,
+.collection .card__media,
+.collection .card .media,
+.collection .card__media img {
+  opacity: 1 !important;
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* Grab cursor to signal the row is draggable */
+.collection .slider {
+  cursor: grab;
+}
+
+.collection .slider:active {
+  cursor: grabbing;
+}
+
+/* Show product images in full (image_ratio: adapt) — no cropping */
+.collection .card__inner,
+.collection .card__media,
+.collection .card .media {
+  background: transparent;
+}
+
+.collection .card__media img,
+.collection .card .media img {
+  object-fit: contain !important;
 }
 
 /* No-card: clean white, centered titles */
