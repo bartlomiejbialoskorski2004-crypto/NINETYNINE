@@ -1,0 +1,5 @@
+# Prettier / editor temp files — never upload these to Shopify
+*.tmp
+*.tmp.*
+*.bak
+.DS_Store
