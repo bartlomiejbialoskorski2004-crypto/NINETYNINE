@@ -684,7 +684,26 @@ h2,
 /* --- Footer — policy links left, social icons right (one row) ------------- */
 .footer__content-bottom {
   border-top: 0;
-  display: none; /* hide the empty localization/copyright bottom row */
+}
+
+/* Hide the copyright/payment row, keep the language selector visible */
+.footer__content-bottom .footer__copyright,
+.footer__content-bottom .footer__payment {
+  display: none;
+}
+
+/* Language selector — minimal, uppercase, centered */
+.footer__localization {
+  display: flex;
+  justify-content: center;
+}
+
+.footer__localization .localization-form__select,
+.footer__localization .disclosure__button {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 /* Top row: links left, social right */
