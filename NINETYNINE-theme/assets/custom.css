@@ -8,28 +8,39 @@
    info-left | media-center | options-right
    ========================================================================== */
 @media screen and (min-width: 990px) {
-  /* Break the product section out of the 1200px page-width to full bleed */
+  /* Break the product section out of the 1200px page-width; keep side margins */
   .template-product #MainContent .page-width {
     max-width: none;
-    padding-left: 4rem;
-    padding-right: 4rem;
+    padding-left: 7rem;
+    padding-right: 7rem;
   }
 
   .product {
     display: grid;
-    grid-template-columns: 0.7fr 3.4fr 0.7fr;
-    column-gap: 2.4rem;
+    grid-template-columns: 0.85fr 2fr 0.85fr;
+    column-gap: 3rem;
     align-items: center;
   }
 
-  /* Media in the centre column — fills the column, content centered */
-  .product__media-wrapper {
+  /* Media in the centre column — fills the column, content centered.
+     Override Dawn's .product--large rules that force max-width:65% + width:calc(). */
+  .product__media-wrapper,
+  .product--large:not(.product--no-media) .product__media-wrapper {
     grid-column: 2;
     grid-row: 1;
-    max-width: none;
-    width: 100%;
+    max-width: none !important;
+    width: 100% !important;
+    padding-left: 0 !important;
     display: flex;
     justify-content: center;
+  }
+
+  /* Override Dawn's info-wrapper width/padding so the grid controls layout */
+  .product--large:not(.product--no-media) .product__info-wrapper,
+  .product__info-wrapper {
+    max-width: none !important;
+    width: auto !important;
+    padding: 0 !important;
   }
 
   .product__media-wrapper media-gallery,
@@ -64,6 +75,7 @@
   .product__info-right {
     grid-column: 3;
     grid-row: 1;
+    align-self: center;
   }
 
   /* Hide the "View full details" link on the product page (single product) */
@@ -185,13 +197,13 @@
   height: auto;
 }
 
-/* --- Product typography / price ------------------------------------------- */
+/* --- Product typography / price (smaller side columns) -------------------- */
 .product__title h1,
 .product__title .h1 {
   text-transform: uppercase;
   font-weight: 800;
   letter-spacing: 0.01em;
-  font-size: 2.6rem;
+  font-size: 2rem;
 }
 
 .product .price__sale .price-item--sale,
@@ -206,16 +218,34 @@
 
 .product__description,
 .product .rte {
-  line-height: 1.5;
+  line-height: 1.45;
+  font-size: 1.3rem;
 }
 
-/* Collapsible rows — clean, square */
+/* Collapsible rows — boxed, square (Balenciaga-style) */
+.product .product__accordion.accordion {
+  border: 1px solid rgba(var(--color-foreground), 0.45);
+  border-top: 1px solid rgba(var(--color-foreground), 0.45);
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.45);
+  margin-bottom: -1px; /* collapse adjacent borders */
+}
+
 .product .product__accordion .accordion__title,
 .product .product__accordion summary {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-weight: 600;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  padding: 1.4rem 1.6rem;
+  margin: 0;
+}
+
+.product .product__accordion summary {
+  list-style: none;
+}
+
+.product .product__accordion .accordion__content {
+  padding: 0 1.6rem 1.6rem;
 }
 
 /* --- Size buttons — square pills ------------------------------------------ */
