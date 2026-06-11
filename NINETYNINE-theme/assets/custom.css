@@ -1,0 +1,190 @@
+/* ==========================================================================
+   NINETYNINE — designer drop theme overrides
+   Premium black/white, bold uppercase, sharp edges.
+   ========================================================================== */
+
+/* --- Global typography ---------------------------------------------------- */
+h1,
+h2,
+.h0,
+.h1,
+.h2,
+.header__heading,
+.header__wordmark {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 800;
+}
+
+/* --- Header / centered wordmark ------------------------------------------- */
+.header__wordmark {
+  font-size: 2.2rem;
+  letter-spacing: 0.15em;
+  font-weight: 800;
+}
+
+.header__menu-item,
+.header__active-menu-item,
+.list-menu__item--link {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.header__icons .header__icon span,
+.header__icon--cart {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Announcement bar — small, spaced, uppercase */
+.announcement-bar__message {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* --- Buttons — solid black blocks ----------------------------------------- */
+.button,
+.button--primary,
+.shopify-payment-button__button--unbranded {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  border-radius: 0;
+}
+
+/* --- Hero / image banner -------------------------------------------------- */
+.banner--large:not(.banner--mobile-bottom) .banner__content {
+  padding: 4rem;
+}
+
+.banner__heading {
+  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: 800;
+  line-height: 0.95;
+}
+
+/* SHOP ALL sits as a tight black block bottom-left */
+.banner__buttons .button {
+  padding: 1.2rem 2.4rem;
+}
+
+/* --- Featured collection / product grid ----------------------------------- */
+.collection .title-wrapper-with-link,
+.collection .title {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 800;
+}
+
+/* No-card: clean white, centered titles */
+.card-wrapper .card__information,
+.card__heading {
+  text-align: center;
+}
+
+.card__heading,
+.card__heading a {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.card-information .price,
+.price__regular .price-item,
+.price__sale .price-item {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* Sale price in red, regular compare struck through */
+.price--on-sale .price-item--sale,
+.price--on-sale .price__sale {
+  color: #c0392b;
+}
+
+.price--on-sale .price-item--regular {
+  opacity: 0.6;
+}
+
+/* Sold out / unavailable badge — subtle */
+.card__badge .badge {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 0;
+}
+
+/* --- Newsletter / manifesto ----------------------------------------------- */
+.newsletter .h1 {
+  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.newsletter__subheading {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.newsletter-form {
+  margin-top: 2.4rem;
+}
+
+.newsletter-form__button {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  border-radius: 0;
+}
+
+/* --- Brand marquee -------------------------------------------------------- */
+.brand-marquee {
+  overflow: hidden;
+}
+
+.brand-marquee__inner {
+  width: 100%;
+  text-align: center;
+  line-height: 0.8;
+}
+
+.brand-marquee__text {
+  display: inline-block;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.8;
+}
+
+/* --- Footer — minimal ----------------------------------------------------- */
+.footer__content-bottom {
+  border-top: 0;
+}
+
+/* Menu links left, social icons right on the same row */
+.footer__content-top .footer-block--menu {
+  align-items: flex-start;
+}
+
+.footer__content-top .footer-block__details-content .list-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+}
+
+.footer-block__heading,
+.footer__list-social,
+.footer-block--menu .list-menu__item {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}

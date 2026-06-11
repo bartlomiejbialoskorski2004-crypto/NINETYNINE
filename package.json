@@ -1,0 +1,15 @@
+{
+  "name": "ninetynine",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NINETYNINE Shopify theme (Dawn-based)",
+  "scripts": {
+    "format": "prettier --write \"NINETYNINE-theme/**/*.{liquid,json,css,js}\"",
+    "format:check": "prettier --check \"NINETYNINE-theme/**/*.{liquid,json,css,js}\"",
+    "lint": "shopify theme check --path NINETYNINE-theme"
+  },
+  "devDependencies": {
+    "@shopify/prettier-plugin-liquid": "^1.9.3",
+    "prettier": "^3.6.2"
+  }
+}
