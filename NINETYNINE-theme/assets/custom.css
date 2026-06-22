@@ -400,6 +400,29 @@ h2,
   font-weight: 800;
 }
 
+/* EITYEIT logo image (square PNG, text sits in the middle band) */
+.header__wordmark-logo {
+  display: block;
+  height: 6rem;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Default (inner pages, solid white header): black logo — no filter */
+.header__wordmark-logo {
+  filter: none;
+}
+
+/* HOME at top / scrolling down (transparent header over hero): white logo */
+.template-index .section-header .header__wordmark-logo {
+  filter: invert(1) brightness(2);
+}
+
+/* HOME scrolling up (solid white bar): back to black logo */
+.template-index .section-header.nn-scroll-up .header__wordmark-logo {
+  filter: none;
+}
+
 .header__menu-item,
 .header__active-menu-item,
 .list-menu__item--link {

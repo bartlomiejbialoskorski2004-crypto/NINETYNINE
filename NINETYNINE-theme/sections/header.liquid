@@ -200,7 +200,14 @@
           </div>
         {%- else -%}
           <span class="h2 header__wordmark">
-            {{- section.settings.wordmark_text | default: shop.name -}}
+            <img
+              src="{{ 'eityeit-logo.png' | asset_url }}"
+              alt="{{ section.settings.wordmark_text | default: shop.name }}"
+              class="header__wordmark-logo"
+              width="160"
+              height="48"
+              loading="eager"
+            >
           </span>
         {%- endif -%}
       </a>
@@ -247,7 +254,14 @@
           </div>
         {%- else -%}
           <span class="h2 header__wordmark">
-            {{- section.settings.wordmark_text | default: shop.name -}}
+            <img
+              src="{{ 'eityeit-logo.png' | asset_url }}"
+              alt="{{ section.settings.wordmark_text | default: shop.name }}"
+              class="header__wordmark-logo"
+              width="160"
+              height="48"
+              loading="eager"
+            >
           </span>
         {%- endif -%}
       </a>
@@ -524,7 +538,7 @@
     {
       "type": "text",
       "id": "wordmark_text",
-      "default": "NINETYNINE",
+      "default": "EITYEIT®",
       "label": "Wordmark text",
       "info": "Shown as the text logo when no logo image is uploaded."
     },
