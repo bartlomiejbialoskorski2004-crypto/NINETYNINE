@@ -404,10 +404,22 @@ h2,
    wordmark reads larger while the navbar stays thin). */
 .header__wordmark-logo {
   display: block;
-  height: 4.4rem;
+  height: 9rem;
   width: auto;
   object-fit: contain;
-  margin: -1rem 0; /* let the square's empty bands overlap the thin bar */
+  /* The square logo has big transparent top/bottom bands, so the visible
+     wordmark is ~1/3 of the height. Make it tall and let the empty bands
+     overlap the thin bar via negative margin (bar height stays small). */
+  margin: -3rem 0;
+}
+
+/* Allow the oversized logo to spill outside the thin header without
+   stretching the bar */
+.section-header,
+.section-header .header,
+.header__heading,
+.header__heading-link {
+  overflow: visible;
 }
 
 /* Keep the header bar as thin as possible */
