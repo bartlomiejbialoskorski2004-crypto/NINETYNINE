@@ -400,12 +400,28 @@ h2,
   font-weight: 800;
 }
 
-/* EITYEIT logo image (square PNG, text sits in the middle band) */
+/* EITYEIT logo image (square PNG; crop the transparent top/bottom bands so the
+   wordmark reads larger while the navbar stays thin). */
 .header__wordmark-logo {
   display: block;
-  height: 8rem;
+  height: 4.4rem;
   width: auto;
   object-fit: contain;
+  margin: -1rem 0; /* let the square's empty bands overlap the thin bar */
+}
+
+/* Keep the header bar as thin as possible */
+.section-header .header {
+  padding-top: 0.4rem !important;
+  padding-bottom: 0.4rem !important;
+  min-height: 0;
+}
+
+.header__heading,
+.header__heading-link {
+  margin: 0;
+  padding: 0;
+  min-height: 0;
 }
 
 /* Custom hero image from assets fills the banner */
