@@ -403,9 +403,17 @@ h2,
 /* EITYEIT logo image (square PNG, text sits in the middle band) */
 .header__wordmark-logo {
   display: block;
-  height: 6rem;
+  height: 8rem;
   width: auto;
   object-fit: contain;
+}
+
+/* Custom hero image from assets fills the banner */
+.banner__media-image-custom {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* Default (inner pages, solid white header): black logo — no filter */
