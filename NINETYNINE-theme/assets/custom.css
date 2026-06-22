@@ -3,6 +3,39 @@
    Premium black/white, bold uppercase, sharp edges.
    ========================================================================== */
 
+/* --- Global font: Helvetica Neue everywhere; headings italic -------------- */
+:root {
+  --font-body-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  --font-body-style: normal !important;
+  --font-heading-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  --font-heading-style: normal !important;
+}
+
+body,
+.rte,
+button,
+input,
+select,
+textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* Titles in italic */
+h1,
+h2,
+h3,
+.h0,
+.h1,
+.h2,
+.h3,
+.title,
+.banner__heading,
+.product__title h1,
+.newsletter .h1,
+.collection .title {
+  font-style: italic;
+}
+
 /* ==========================================================================
    PRODUCT PAGE — Balenciaga-style 3-column layout
    info-left | media-center | options-right
@@ -577,6 +610,78 @@ h2,
   padding: 1.2rem 2.4rem;
 }
 
+/* --- Top scrolling marquee bar (nude-project style) ----------------------- */
+.nn-top-marquee {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 6; /* above the header */
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease;
+  will-change: transform;
+}
+
+/* Hidden state (on scroll-down) — slides up smoothly */
+.nn-top-marquee--hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.nn-top-marquee__track {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: nn-marquee-scroll 40s linear infinite;
+}
+
+.nn-top-marquee__item,
+.nn-top-marquee__sep {
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  padding: 0 1.4rem;
+}
+
+@keyframes nn-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Push the fixed home header down below the marquee while it's visible */
+.template-index .section-header {
+  top: 3.2rem;
+  transition: top 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* When marquee hidden, header rises to the very top */
+body.nn-marquee-hidden .template-index .section-header {
+  top: 0;
+}
+
+/* Inner pages: header is in normal flow, so push the whole page down by the
+   marquee height; remove the offset smoothly once the marquee hides. */
+body:not(.template-index) {
+  padding-top: 3.2rem;
+  transition: padding-top 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body:not(.template-index).nn-marquee-hidden {
+  padding-top: 0;
+}
+
 /* --- Featured collection / product grid ----------------------------------- */
 .collection .title-wrapper-with-link,
 .collection .title {
@@ -736,8 +841,9 @@ h2,
   line-height: 0.78;
   color: #000 !important;
   /* Whole wordmark fits across the viewport; bottom of letters on the edge */
-  font-size: 11vw !important;
-  margin-bottom: -0.1em; /* let the wordmark rest right on the bottom frame */
+  font-size: 15vw !important;
+  letter-spacing: -0.04em;
+  margin-bottom: -0.12em; /* let the wordmark rest right on the bottom frame */
 }
 
 /* --- Footer — policy links left, social icons right (one row) ------------- */

@@ -1,0 +1,14 @@
+{%- comment -%}
+  Top scrolling marquee bar (à la nude-project). Visible at the very top,
+  smoothly slides up / hides on scroll-down via .nn-top-marquee--hidden
+  (toggled by ninetynine-header.js). Pure CSS infinite scroll animation.
+{%- endcomment -%}
+{%- assign msg = 'WORLD FOOTBALL CUP RAFFLE · 30 DAYS EASY RETURNS &amp; EXCHANGES · NO EXTRA FEES — TAXES &amp; DUTIES INCLUDED' -%}
+<div class="nn-top-marquee" id="nn-top-marquee" aria-hidden="true">
+  <div class="nn-top-marquee__track">
+    {%- for i in (1..4) -%}
+      <span class="nn-top-marquee__item">{{ msg }}</span>
+      <span class="nn-top-marquee__sep">·</span>
+    {%- endfor -%}
+  </div>
+</div>
