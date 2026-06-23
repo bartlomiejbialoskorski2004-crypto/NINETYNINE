@@ -666,9 +666,9 @@ h2,
   transition: top 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* When marquee hidden, header rises to the very top */
-body.nn-marquee-hidden .template-index .section-header {
-  top: 0;
+/* When marquee hidden, header rises to the very top (both classes on <body>) */
+body.nn-marquee-hidden.template-index .section-header {
+  top: 0 !important;
 }
 
 /* Inner pages: header is in normal flow, so push the whole page down by the
